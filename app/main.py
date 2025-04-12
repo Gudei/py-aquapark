@@ -9,15 +9,15 @@ class IntegerRange:
     def __set_name__(self, owner: str, name: str) -> None:
         self.name = "_" + name
 
-    def __get__(self, obj: str, objtype: object = None) -> str:
-        return getattr(obj, self.name)
+    def __get__(self, obj: object, objtype: object = None) -> int:
+        return obj.__dict__.get(self.name)
 
     def __set__(self, obj: object, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError
         if not (self.min_amount <= value <= self.max_amount):
             raise ValueError
-        setattr(obj, self.name, value)
+        obj.__dict__[self.name] = value
 
 
 class Visitor:
